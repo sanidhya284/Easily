@@ -1,0 +1,45 @@
+<div class="container applicant-list-container">
+    <a href="/jobs/<%= job._id %>" class="btn btn-secondary" style="margin-bottom: 20px;">&larr; Back to Job Details</a>
+
+    <% if (job) { %>
+        <h2>Applicants for "<%= job.jobDesignation %>"</h2>
+        <h3>(<%= job.applicants.length %> Applicants)</h3>
+
+        <% if (applicants && applicants.length > 0) { %>
+            <table class="applicant-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Applied On</th>
+                        <th>Resume</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <% applicants.forEach((applicant, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= applicant.name %></td>
+                            <td><%= applicant.email %></td>
+                            <td><%= applicant.contact %></td>
+                            <td><%= new Date(applicant.appliedDate).toLocaleDateString() %></td>
+                            <td>
+                                <% if (applicant.resumePath) { %>
+                                    <a href="<%= applicant.resumePath %>" target="_blank" class="applicant-resume-link">View Resume</a>
+                                <% } else { %>
+                                    No Resume
+                                <% } %>
+                            </td>
+                            </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No applicants have applied for this job yet.</p>
+        <% } %>
+    <% } else { %>
+        <p>Job not found.</p>
+    <% } %>
+</div>

@@ -1,0 +1,54 @@
+<div class="container form-container">
+    <h2>Update Job Posting</h2>
+    <% if (job) { %>
+        <form action="/jobs/<%= job._id %>/update" method="POST" class="job-form">
+            <div class="form-group">
+                <label for="jobCategory">Job Category:</label>
+                <input type="text" id="jobCategory" name="jobCategory" value="<%= job.jobCategory %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jobDesignation">Job Designation:</label>
+                <input type="text" id="jobDesignation" name="jobDesignation" value="<%= job.jobDesignation %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jobLocation">Job Location:</label>
+                <input type="text" id="jobLocation" name="jobLocation" value="<%= job.jobLocation %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName" value="<%= job.companyName %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="salary">Salary (INR):</label>
+                <input type="number" id="salary" name="salary" value="<%= job.salary %>" required min="1">
+            </div>
+
+            <div class="form-group">
+                <label for="applyBy">Apply By Date:</label>
+                <input type="date" id="applyBy" name="applyBy" value="<%= new Date(job.applyBy).toISOString().substring(0, 10) %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="skillsInput">Skills Required (Type and press Enter or comma):</label>
+                <div class="skills-input-group" id="skillsContainer">
+                    </div>
+                <input type="text" id="skillsInput" placeholder="e.g., JavaScript, React, Node.js">
+                <input type="hidden" name="skillsRequired" id="hiddenSkillsInput" value="<%= job.skillsRequired.join(', ') %>">
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfOpening">Number of Openings:</label>
+                <input type="number" id="numberOfOpening" name="numberOfOpening" value="<%= job.numberOfOpening %>" required min="1">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Job</button>
+            <a href="/jobs/<%= job._id %>" class="btn btn-secondary">Cancel</a>
+        </form>
+    <% } else { %>
+        <p>Job details not found for update.</p>
+    <% } %>
+</div>

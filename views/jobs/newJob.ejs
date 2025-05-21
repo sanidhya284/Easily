@@ -1,0 +1,50 @@
+<div class="container form-container">
+    <h2>Post a New Job</h2>
+    <form action="/jobs" method="POST" class="job-form">
+        <div class="form-group">
+            <label for="jobCategory">Job Category:</label>
+            <input type="text" id="jobCategory" name="jobCategory" value="<%= job ? job.jobCategory : '' %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="jobDesignation">Job Designation:</label>
+            <input type="text" id="jobDesignation" name="jobDesignation" value="<%= job ? job.jobDesignation : '' %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="jobLocation">Job Location:</label>
+            <input type="text" id="jobLocation" name="jobLocation" value="<%= job ? job.jobLocation : '' %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="companyName">Company Name:</label>
+            <input type="text" id="companyName" name="companyName" value="<%= job ? job.companyName : '' %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="salary">Salary (INR):</label>
+            <input type="number" id="salary" name="salary" value="<%= job ? job.salary : '' %>" required min="1">
+        </div>
+
+        <div class="form-group">
+            <label for="applyBy">Apply By Date:</label>
+            <input type="date" id="applyBy" name="applyBy" value="<%= job ? new Date(job.applyBy).toISOString().substring(0, 10) : '' %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="skillsInput">Skills Required (Type and press Enter or comma):</label>
+            <div class="skills-input-group" id="skillsContainer">
+                </div>
+            <input type="text" id="skillsInput" placeholder="e.g., JavaScript, React, Node.js">
+            <input type="hidden" name="skillsRequired" id="hiddenSkillsInput" value="<%= job && job.skillsRequired ? job.skillsRequired.join(', ') : '' %>">
+        </div>
+
+
+        <div class="form-group">
+            <label for="numberOfOpening">Number of Openings:</label>
+            <input type="number" id="numberOfOpening" name="numberOfOpening" value="<%= job ? job.numberOfOpening : '' %>" required min="1">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Post Job</button>
+    </form>
+</div>

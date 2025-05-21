@@ -1,0 +1,60 @@
+<div class="container job-details-container">
+    <a href="/jobs" class="btn btn-secondary" style="margin-bottom: 20px;">&larr; Back to All Jobs</a>
+
+    <% if (job) { %>
+        <h2><%= job.jobDesignation %></h2>
+        <div class="detail-item"><strong>Company:</strong> <%= job.companyName %></div>
+        <div class="detail-item"><strong>Category:</strong> <%= job.jobCategory %></div>
+        <div class="detail-item"><strong>Location:</strong> <%= job.jobLocation %></div>
+        <div class="detail-item"><strong>Salary:</strong> ₹<%= job.salary.toLocaleString() %></div>
+        <div class="detail-item"><strong>Number of Openings:</strong> <%= job.numberOfOpening %></div>
+        <div class="detail-item"><strong>Job Posted On:</strong> <%= new Date(job.jobPosted).toLocaleDateString() %></div>
+        <div class="detail-item"><strong>Apply By:</strong> <%= new Date(job.applyBy).toLocaleDateString() %></div>
+        <div class="detail-item">
+            <strong>Skills Required:</strong>
+            <div class="skills-list">
+                <% job.skillsRequired.forEach(skill => { %>
+                    <span class="skill-tag"><%= skill %></span>
+                <% }) %>
+            </div>
+        </div>
+
+        <hr>
+
+        <h3>Apply for this Job</h3>
+        <form action="/jobs/apply/<%= job._id %>" method="POST" enctype="multipart/form-data" class="auth-form">
+            <p>Fill out the form below to apply for this position.</p>
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact Number:</label>
+                <input type="text" id="contact" name="contact" pattern="[0-9]{10,15}" title="Please enter a valid phone number (10-15 digits)" required>
+            </div>
+            <div class="form-group">
+                <label for="resume">Upload Resume (PDF, DOC, DOCX):</label>
+                <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+        </form>
+
+        <% if (user && user.role === 'recruiter' && user._id === job.recruiterId) { %>
+            <hr>
+            <div class="job-actions">
+                <a href="/jobs/<%= job._id %>/update" class="btn btn-secondary">Edit Job</a>
+                <form action="/jobs/<%= job._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this job?');">
+                    <button type="submit" class="btn btn-danger">Delete Job</button>
+                </form>
+                <a href="/jobs/<%= job._id %>/applicants" class="btn btn-primary">View Applicants (<%= job.applicants.length %>)</a>
+            </div>
+        <% } %>
+
+    <% } else { %>
+        <p>Job details not found.</p>
+    <% } %>
+</div>

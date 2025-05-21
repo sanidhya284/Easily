@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Easily Job Portal</a>
+            <div class="nav-links">
+                <% if (user) { %>
+                    <span>Hello, <%= user.name %>!</span>
+                    <% if (req.cookies && req.cookies.lastVisit) { %>
+                        <span class="last-visit">Last visit: <%= req.cookies.lastVisit %></span>
+                    <% } %>
+                    <a href="/jobs">All Jobs</a>
+                    <% if (user.role === 'recruiter') { %>
+                        <a href="/jobs/new">Post New Job</a>
+                    <% } %>
+                    <a href="/logout">Logout</a>
+                <% } else { %>
+                    <a href="/">Login</a>
+                    <a href="/register">Register</a>
+                    <a href="/jobs">Browse Jobs (Job Seeker)</a>
+                <% } %>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <% if (success) { %>
+            <div class="message success-message">
+                <p><%= success %></p>
+            </div>
+        <% } %>
+
+        <% if (errors && errors.length > 0) { %>
+            <div class="message error-message">
+                <ul>
+                    <% errors.forEach(error => { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <%- include(body) %>
+    </main>
+
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Easily Job Portal. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
