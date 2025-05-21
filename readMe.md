@@ -15,3 +15,4 @@ Templating: EJS
 Middleware: Express-Session, Cookie-Parser, Express-Validator
 Frontend: HTML, CSS, Vanilla JavaScript
 
+For detailed guide https://easily-job-portal.hashnode.space/default-guide/v1.0?t=1747827547138
